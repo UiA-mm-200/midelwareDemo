@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <section>
+        username: <input type="text" id="username">
+        password: <input type="password" id="password">
+        <button id="createUser">Create user</button>
+    </section>
+
+    <section>
+        username: <input type="text" id="loginUsername">
+        password: <input type="password" id="loginPassword">
+        <button id="loginUser">Create user</button>
+    </section>
+
+
+    <script>
+        let credentials = null;
+
+        document.getElementById("loginUser").onclick = function () {
+
+            let username = usernameInput.value
+            let password = passwordInput.value
+
+            credentials = "Basic " + window.btoa(`${username}:${password}`)
+
+            let config = {
+                method: "POST",
+                headers: {
+                    "content-type": "application/json",
+                    "authorization": credentials
+                }
+            }
+
+            fetch("/user", config).then(resp => {
+                console.log(resp.status);
+            })
+
+
+        }
+    </script>
+
+
+    <script>
+
+        const usernameInput = document.getElementById("username");
+        const passwordInput = document.getElementById("password");
+
+        document.getElementById("createUser").onclick = function (evt) {
+
+            if (usernameInput.value.length < 3 && passwordInput.value.length < 3) {
+                alert("NEII!!!!");
+                return
+            }
+
+            let body = {
+                username: usernameInput.value,
+                password: passwordInput.value
+            }
+            let config = {
+                method: "POST",
+                headers: {
+                    "content-type": "application/json"
+                },
+                body: JSON.stringify(body)
+            }
+
+            fetch("/user", config).then(resp => {
+                console.log(resp.status);
+            })
+
+
+        }
+
+
+    </script>
+
+
+</body>
+
+</html>
