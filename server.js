@@ -1,6 +1,5 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const authenticator = require("./modules/auth");
 const {
   Router
 } = require('express');
